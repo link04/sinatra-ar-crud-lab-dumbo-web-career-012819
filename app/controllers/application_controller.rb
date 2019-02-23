@@ -2,7 +2,6 @@
 require_relative '../../config/environment'
 require 'pry'
 class ApplicationController < Sinatra::Base
-use Rack::MethodOverride
 
   configure do
     set :public_folder, 'public'
@@ -10,50 +9,43 @@ use Rack::MethodOverride
   end
 
   def article_id
-     @article = Article.find(params[:id])
+     Article.find(params[:id])
   end
-  
-  get '/index' do
+
+  get '/articles' do
     @articles = Article.all
     erb :index
   end
-  
+
   get '/articles/new' do
     erb :new
   end
-  
-  post '/articles' do 
-    
-    binding.pry
+
+  post '/articles' do
     @article = Article.create(params)
-    redirect "/articles/#{@articles.id}"
+    redirect "/articles/#{@article.id}"
   end
-  
-  get '/articles/:id' do 
+
+  get '/articles/:id' do
     @article = article_id
     erb :show
   end
-  
-  get '/articles/:id/edit' do 
-    article_id
+
+  get '/articles/:id/edit' do
+    @article = article_id
     erb :edit
   end
-  
+
   patch '/articles/:id' do
-    article_id
-    @article.update(params[:id]).save
+
+    @article = Article.find(params[:id])
+    @article.update(title: params[:title], content: params[:content] )
     redirect "/articles/#{@article.id}"
   end
-  
-  patch '/articles/:id' do
-    article_id
-    @article.update(params[:id]).save
-    redirect "/articles/#{@article.id}"
+
+  delete '/articles/:id' do
+    Article.delete(article_id.id)
+    redirect "/articles"
   end
-  
-  delete '/articles/:id' do 
-    article_id.delete
-    redirect "/index"
-  end
-  
+
 end
