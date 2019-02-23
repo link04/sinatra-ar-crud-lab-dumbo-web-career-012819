@@ -10,7 +10,7 @@ use Rack::MethodOverride
   end
 
   def article_id
-<<<<<<< HEAD
+
      Article.find(params[:id])
   end
 
