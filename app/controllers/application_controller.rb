@@ -93,5 +93,4 @@ use Rack::MethodOverride
     redirect "/index"
   end
   
->>>>>>> 0f06e356f0d918e26d5c4b2f94964345c09e8a82
 end
