@@ -50,9 +50,6 @@ use Rack::MethodOverride
     redirect "/articles"
   end
 
-     @article = Article.find(params[:id])
-  end
-  
   get '/index' do
     @articles = Article.all
     erb :index
